@@ -10,6 +10,8 @@
             :imgSrc=product.source
             :imgAlt=product.alt
             :number=product.num
+            :cheap=isCheapest(product)
+            :expensive=isExpensive(product)
         >
         </Product>
       </div>
@@ -31,7 +33,7 @@ export default {
   data: () => {
     return {
       products: {
-        foot: {
+        football: {
           name: "Football",
           source: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Football_%28soccer_ball%29.svg/1200px-Football_%28soccer_ball%29.svg.png",
           alt: "A football",
@@ -55,15 +57,23 @@ export default {
           price: 10,
           num: 20
         },
-        f: {
+        frite: {
           name: "Frite",
           source: "https://gourmandiz.dhnet.be/app/uploads/2019/03/frites6-4096x2918.jpg",
           alt: "A frite",
           desc: "The frite of Nico",
-          price: 20,
+          price: 5.50,
           num: 12
         },
-        a: {
+        frite1: {
+          name: "Nike Air",
+          source: "https://www.kindpng.com/picc/m/29-291720_nike-roshe-run-monogram-transparent-background-nike-shoes.png",
+          alt: "Nike Air",
+          desc: "Be the prettiest and the most hype person",
+          price: 300,
+          num: 30
+        },
+        frite2: {
           name: "Frite",
           source: "https://gourmandiz.dhnet.be/app/uploads/2019/03/frites6-4096x2918.jpg",
           alt: "A frite",
@@ -71,15 +81,7 @@ export default {
           price: 20,
           num: 15
         },
-        b: {
-          name: "Frite",
-          source: "https://gourmandiz.dhnet.be/app/uploads/2019/03/frites6-4096x2918.jpg",
-          alt: "A frite",
-          desc: "The frite of Nico",
-          price: 20,
-          num: 15
-        },
-        c: {
+        frite3: {
           name: "Frite",
           source: "https://gourmandiz.dhnet.be/app/uploads/2019/03/frites6-4096x2918.jpg",
           alt: "A frite",
@@ -87,7 +89,7 @@ export default {
           price: 20,
           num: 50
         },
-        y: {
+        frite4: {
           name: "Frite",
           source: "https://gourmandiz.dhnet.be/app/uploads/2019/03/frites6-4096x2918.jpg",
           alt: "A frite",
@@ -96,6 +98,14 @@ export default {
           num: 23
         }
       }
+    }
+  },
+  methods : {
+    isCheapest(el) {
+      return !Object.entries(this.products).some(entrie => entrie[1].price < el.price)
+    },
+    isExpensive(el) {
+      return !Object.entries(this.products).some(entrie => entrie[1].price > el.price)
     }
   }
 }

@@ -1,21 +1,28 @@
 <template>
   <div id="card" :class="number-counter > 10 ? activeClass : errorClass">
-    <img id="obj-img" v-bind:src=imgSrc v-bind:alt=imgAlt>
+    <img id="obj-img" :src=imgSrc :alt=imgAlt>
     <div id="container">
       <div id="basket">
         <Basket :number=number :counter=counter></Basket>
       </div>
       <h4><b>{{ productName }} - <span style="color:navajowhite">{{productPrice}} €</span></b></h4>
-      <p>{{ productDescription }}</p>
+      <p id="desc">{{ productDescription }}</p>
       <p v-if="counter>=0 && numCounter > 3">
         Qty: {{numCounter}}/{{number}}
       </p>
       <p v-if="(numCounter) <= 3" style="color:red">Qty: {{numCounter}}/{{number}}</p>
-      <p v-if="counter==number" style="color: red">{{productName}} is no more available</p>
+      <p id="un-available" v-if="counter==number" style="color: red">{{productName}} is no more available</p>
       <div id="btn-container">
         <button class="btn red" v-if="counter>0" v-on:click="downCounter()">-</button>
         <button class="btn green" v-if="counter<number" v-on:click="upCounter()">+</button>
       </div>
+      <div id="price-indicator" v-if="cheap">
+        <p>CHEAPEST</p>
+      </div>
+      <div id="expensive-indicator" v-if="expensive">
+        <p>EXPENSIVE</p>
+      </div>
+
     </div>
   </div>
 </template>
@@ -32,7 +39,9 @@ export default {
     number: Number,
     productDescription: String,
     imgSrc: String,
-    imgAlt: String
+    imgAlt: String,
+    cheap: Boolean,
+    expensive: Boolean
   },
   components: {
     Basket
@@ -67,6 +76,19 @@ export default {
   color: white;
   font-family: "Poppins", serif;
 }
+
+#un-available {
+  font-style: italic;
+  font-weight: lighter;
+  font-size: 8px;
+}
+
+#desc {
+  font-style: italic;
+  font-weight: lighter;
+  font-size: 10px;
+}
+
 
 #btn-container {
   display: flex;
@@ -138,5 +160,48 @@ export default {
   justify-content: space-between;
   text-align: center;
   height: 50%;
+}
+
+#price-indicator {
+  position: absolute;
+  border-radius: 2px;
+  top:-3.4%;
+  height: 120px;
+  width: 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: 10px !important;
+}
+
+#expensive-indicator {
+  position: absolute;
+  border-radius: 2px;
+  top:-3.4%;
+  height: 120px;
+  width: 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: 10px !important;
+}
+
+
+#price-indicator p {
+  writing-mode: vertical-rl;
+  text-orientation: upright !important;
+  font-size: 9px;
+  font-weight: bolder;
+  color: greenyellow;
+}
+
+#expensive-indicator p {
+  writing-mode: vertical-rl;
+  text-orientation: upright !important;
+  font-size: 9px;
+  font-weight: bolder;
+  color: red;
 }
 </style>
