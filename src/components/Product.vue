@@ -11,7 +11,7 @@
         Qty: {{numCounter}}/{{number}}
       </p>
       <p v-if="(numCounter) <= 3" style="color:red">Qty: {{numCounter}}/{{number}}</p>
-      <p id="un-available" v-if="counter==number" style="color: red">{{productName}} is no more available</p>
+      <p id="un-available" v-if="counter===number" style="color: red">{{productName}} is no more available</p>
       <div id="btn-container">
         <button class="btn red" v-if="counter>0" v-on:click="downCounter()">-</button>
         <button class="btn green" v-if="counter<number" v-on:click="upCounter()">+</button>
@@ -41,7 +41,7 @@ export default {
     imgSrc: String,
     imgAlt: String,
     cheap: Boolean,
-    expensive: Boolean
+    expensive: Boolean,
   },
   components: {
     Basket
@@ -51,17 +51,19 @@ export default {
       counter: 0,
       numCounter: this.number,
       activeClass: "green-card",
-      errorClass: "red-card"
+      errorClass: "red-card",
     }
   },
   methods: {
     upCounter() {
-      this.counter++;
-      this.numCounter--;
+      this.counter++
+      this.numCounter--
+      this.$emit('update-qty', 1, this.productPrice)
     },
     downCounter() {
-      this.counter--;
-      this.numCounter++;
+      this.counter--
+      this.numCounter++
+      this.$emit('update-qty', -1, -this.productPrice)
     }
   }
 }
@@ -116,7 +118,7 @@ export default {
   position: absolute;
 
   right: 0;
-  top: 0;
+  top: -88%;
 }
 
 #card {
@@ -154,6 +156,7 @@ export default {
 
 /* Add some padding inside the card container */
 #container {
+  position: relative;
   padding: 2px 16px;
   display: flex;
   flex-direction: column;
@@ -165,7 +168,7 @@ export default {
 #price-indicator {
   position: absolute;
   border-radius: 2px;
-  top:-3.4%;
+  top:-90%;
   height: 120px;
   width: 30px;
 
@@ -178,7 +181,7 @@ export default {
 #expensive-indicator {
   position: absolute;
   border-radius: 2px;
-  top:-3.4%;
+  top:-90%;
   height: 120px;
   width: 30px;
 

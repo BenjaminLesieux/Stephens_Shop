@@ -1,11 +1,16 @@
 <template>
   <div id="header">
-    <img id="logo" src="https://lh3.googleusercontent.com/proxy/kbU_bEBNup2LcdUBjiRnafhnECZsyTxOB1KN6nj6UmkRWo2OJdlwiLklv_eNmSQ4ImQAAYIrKyEqGL6E5y30Px-NEvdiN4i9XPDYK-u7hE736PZqlj2bQDlOqWTrvdxh" alt="cart logo">
+    <img id="logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Znak_graficzny_AGH.svg/1024px-Znak_graficzny_AGH.svg.png" alt="cart logo">
     <img id="sas" src="../assets/logo_ss.png" alt="logo">
 
-    <button id="btn-sidebar" v-on:click="togglePopup">
-      🛍️
-    </button>
+    <div id="sidebar">
+      <p>
+        {{totalPurchased}} 🛍️
+      </p>
+      <p>
+        {{totalPrices}} 💶
+      </p>
+    </div>
   </div>
 </template>
 
@@ -13,7 +18,6 @@
 
 export default {
   name: "Header",
-
   data() {
     return {
       showPopup: Boolean
@@ -24,11 +28,22 @@ export default {
       this.showPopup = !this.showPopup
       console.log("updated popup..." + this.showPopup)
     }
+  },
+  props: {
+    totalPrices: Number,
+    totalPurchased: Number
   }
 }
 </script>
 
 <style scoped>
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,900;1,900&display=swap');
+
+* {
+  font-family: "Poppins", serif;
+}
+
 #header {
   height: 80px;
   width: 100%;
@@ -49,6 +64,7 @@ export default {
 #sas {
   height: 150px;
   align-self: center;
+  margin-left: 20px !important;
 }
 
 #basket {
@@ -60,15 +76,32 @@ export default {
   background-color: whitesmoke;
 }
 
+#sidebar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 95px;
+
+  border-radius: 2px;
+}
+
 #btn-sidebar {
   width: 60px;
   font-size: 45px;
   border-radius: 2px;
   background-color: #904E55;
-  border-left: 1px dashed black;
+}
+
+#sidebar p {
+  padding-left: 1px !important;
+  font-size: 14.6px;
+  font-weight: normal;
+  color: white;
 }
 
 #btn-sidebar:hover{
-  font-size: 50px;
+  font-size: 46px;
 }
 </style>
